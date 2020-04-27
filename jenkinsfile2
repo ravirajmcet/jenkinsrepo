@@ -1,0 +1,25 @@
+node('WindowsSlave')
+{
+  stage('checkout')
+  {
+  git branch: '*/develop', url: 'ssh://git@bitbucket.srv.westpac.com.au/a00972/payment-credential-web-api.git'
+  }
+  stage('Build the job')
+  {
+  powershell '''bat \'\'\'$url = "https://artifactory.srv.westpac.com.au/artifactory/A00972_IDC/dotnet-sdk/dotnet-sdk-3.1.201-win-x64.zip"
+$outputPath = $env:WORKSPACE + "\\\\dotnet-sdk-3.1.201-win-x64.zip"
+$ProgressPreference = \\\'SilentlyContinue\\\'
+Invoke-WebRequest -Uri $url -OutFile $outputPath 
+$ZipfilePath = $outputPath 
+$Destination = $env:WORKSPACE
+Add-Type -assembly “system.io.compression.filesystem”
+[io.compression.zipfile]::ExtractToDirectory($ZipfilePath, $Destination)
+Get-ChildItem -Recurse\'\'\'
+'''
+bat '''cd %WORKSPACE%\\src\\PaymentCredApi\\
+%WORKSPACE%\\dotnet.exe publish "%WORKSPACE%\\src\\PaymentCredApi\\PaymentCredApi.csproj" --runtime win10-x64 --self-contained true --output publish_artefacts -v d --source https://artifactory.srv.westpac.com.au/artifactory/api/nuget/v3/nuget-public '''
+  }
+  stage()
+
+}
+
