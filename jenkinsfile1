@@ -1,0 +1,16 @@
+node('WindowsSlave')
+{
+    stage('Checkout')
+    {
+    git branch: '*/master', url: 'https://github.com/ravirajmcet/jenkinsrepo.git'
+    }
+    stage('static code analysis')
+    {
+        echo "static code analysis"
+    }
+    stage('build jobs')
+    {
+        echo "Build the code"
+    }
+}
+
