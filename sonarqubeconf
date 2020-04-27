@@ -8,10 +8,7 @@ node('WindowSlave')
 {
        def scannerhome = tool 'SONAR_RUNNER_2.4';
        withSonarQubeEnv('Sonar') {
-    // some block
+          sh ---$(scannerhome)/bin/sonar_runner -O sonar.login = admin -O sonar.password = admin---
+          }
 }
-
-}
-
-
 }
