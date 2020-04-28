@@ -1,4 +1,4 @@
-def name;//global variable
+def name;     //global variable
 node('WindowsSlave')
 {
   stage('Checkout')
