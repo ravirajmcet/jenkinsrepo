@@ -1,0 +1,9 @@
+def name;
+node('WindowsSlave')
+{
+  stage('Checkout')
+  {
+    name = "Ravi"
+    echo "My mane is ${name}"
+  }
+}
