@@ -1,4 +1,4 @@
-node('WindowSlave')
+node('WindowSlave')        
 {
    stage('checkout')
 {
