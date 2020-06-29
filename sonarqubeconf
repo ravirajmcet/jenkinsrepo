@@ -1,0 +1,14 @@
+node('WindowSlave')        
+{
+   stage('checkout')
+{
+       checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ravirajmcet/jenkinsrepo.git']]]
+}
+   stage('Code Analysis')
+{
+       def scannerhome = tool 'SONAR_RUNNER_2.4';
+       withSonarQubeEnv('Sonar') {
+          sh ---$(scannerhome)/bin/sonar_runner -O sonar.login = admin -O sonar.password = admin---
+          }
+}
+}

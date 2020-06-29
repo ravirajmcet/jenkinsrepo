@@ -1,0 +1,10 @@
+def name;         //global variable
+node('WindowsSlave')
+{
+  stage('Checkout')
+  {
+    def address = "India";            //local variable
+    name = "Ravi"
+    echo "My name is ${name}"
+  }
+}
